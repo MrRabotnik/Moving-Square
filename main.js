@@ -15,26 +15,51 @@ let amt, startColor, newColor;
 let r = 255, g = 0, b = 0;
 let speed = 10;
 let wait = 100;
+let rating = 0, ratingDir = "plus";
 
-ctx.shadowBlur = 50;
+ctx.shadowBlur = 20;
 
 ctx.fillStyle = "lightgrey";
-ctx.fillRect(0, 0, w, h);
+ctx.rect(0, 0, w, h);
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function randomColor() {
-    changeColor()
-    return `rgb(${r}, ${g}, ${b})`
+    if (rating >= 100 && ratingDir === "plus"){
+        ratingDir = "minus"
+        rating--
+    } 
+    else if (rating <= 0 && ratingDir === "minus"){
+        rating++
+        ratingDir = "plus"
+    }else{
+        if(ratingDir === "plus") rating++
+        else rating--
+    }
+    let color;
+    let parts = (rating > 50) ? (1 - ((rating - 50) / 50)) : rating / 50;
+    parts = Math.round(parts * 255);
+    if (rating < 50) {
+        color = [255, parts, 0];
+    }
+    else if (rating > 50) {
+        color = [parts, 255, 0];
+    }
+    else {
+        color = [255, 255, 0]
+    }
+
+    // changeColor()
+    return `rgb(${color.join(',')})`
 }
 
-function changeColor() {
-    r = randomNumber(0, 255)
-    g = randomNumber(0, 255)
-    b = randomNumber(0, 255)
-}
+// function changeColor() {
+// r = randomNumber(0, 255)
+// g = randomNumber(0, 255)
+// b = randomNumber(0, 255)
+// }
 
 function checkSquareCordsX(cord) {
     if (cord > w - 90) {
@@ -63,9 +88,12 @@ function checkSquareCordsY(cord) {
 function drawSquare() {
     const color = randomColor()
     ctx.beginPath()
+    ctx.strokeStyle = "black"
     ctx.fillStyle = color
     ctx.shadowColor = color
-    ctx.fillRect(squareX, squareY, 90, 90);
+    ctx.rect(squareX, squareY, 90, 90);
+    ctx.stroke();
+    ctx.fill();
     ctx.closePath()
 }
 
