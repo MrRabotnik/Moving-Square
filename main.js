@@ -64,11 +64,11 @@ function randomColor() {
 function checkSquareCordsX(cord) {
     if (cord > w - 90) {
         speed += 1;
-        wait -= 2
+        wait -= 3
         dirX = "minus"
     } else if (cord < 20) {
         speed += 1
-        wait -= 2
+        wait -= 3
         dirX = "plus"
     }
 }
@@ -120,7 +120,7 @@ function animate() {
 
 const init = async () => {
     let i = 0
-    while (i < 2000) {
+    while (i < 1500) {
         animate()
         await timer(wait)
         i++
