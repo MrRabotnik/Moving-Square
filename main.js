@@ -92,7 +92,7 @@ function animate() {
 
 const init = async () => {
     let i = 0
-    while (i < 1500) {
+    while (i < 2000) {
         animate()
         await timer(wait)
         i++
